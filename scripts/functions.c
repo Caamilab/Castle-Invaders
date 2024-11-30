@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+extern void memory_map();
+extern void memory_unmap();
+extern int key_read();
+extern void hexs(unsigned int digito0,unsigned int digito1,unsigned int digito2,unsigned int digito3,unsigned int digito4,unsigned int digito5);
+extern void triangle(unsigned int cor,unsigned int tamanho,unsigned int posX,unsigned int posY,unsigned int endereco);
+extern void square(unsigned int cor,unsigned int tamanho,unsigned int posX,unsigned int posY,unsigned int endereco);
+extern void background_color(unsigned int red, unsigned int green, unsigned int blue);
+extern void sprite(unsigned int reg, unsigned int activation_bit, unsigned int x, unsigned int y, unsigned int offset);
+extern void background_block(unsigned int address, unsigned int red, unsigned int green, unsigned int blue);
+extern void WSM(unsigned int address, unsigned int red, unsigned int green, unsigned int blue);
+
+// funcao para desenhar um triangulo na tela
+void draw_triangle(unsigned int cor,unsigned int tamanho,unsigned int posX,unsigned int posY,unsigned int endereco){
+  triangle(cor, tamanho, posX, posY, endereco);
+}
+
+// funcao para desenhar um quadrado na tela
+void draw_square(unsigned int cor,unsigned int tamanho,unsigned int posX,unsigned int posY,unsigned int endereco){
+  square(cor, tamanho, posX, posY, endereco);
+}
+// funcao para mudar a cor do background
+void set_background_color(unsigned int red, unsigned int green, unsigned int blue){
+  background_color(red, green, blue);
+}
+// funcao para mostrar um sprite
+void set_sprite(unsigned int reg, unsigned int activation_bit, unsigned int x, unsigned int y, unsigned int offset){
+  sprite(reg, activation_bit, x, y, offset);
+}
+// funcao para mostrar bloco 8x8
+void set_background_block(unsigned int x, unsigned int y, unsigned int red, unsigned int green, unsigned int blue){
+  unsigned int address = (x * 80) + y;
+  background_block(address, red, green, blue);
+}
+// funcao para adicionar sprite
+void add_sprite(unsigned int base_address, unsigned int red, unsigned int green, unsigned int blue){
+  for (unsigned int i = 0; i < 400; i++) {
+    unsigned int address = base_address + i; 
+    WSM(address, red, green, blue);           
+  }
+}
+void clear_screen() {
+  // Define a cor de fundo para preto
+  set_background_color(0, 0, 0);
+
+  // Apaga todos os blocos de background
+  for (int col = 0; col < 80; col++) {
+    for (int lin = 0; lin < 60; lin++) { 
+      set_background_block(col, lin, 110, 111, 111);  
+    }
+  }
+
+  // Desabilita todos os sprites
+  for (int i = 1; i < 32; i++) {
+    set_sprite(i, 0, 0, 0, 0);  
+  }
+
+  // Desabilita todos os poligonos
+  for (int i = 0; i< 16; i++){
+    draw_triangle(0, 0 , 0, 0, i);
+    draw_triangle(0, 0, 0, 0, i);
+  }
+}
