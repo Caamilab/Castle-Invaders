@@ -25,8 +25,8 @@ HEX0_BASE: .word 0x60  @ Endereço do display HEX0
   .global memory_unmap
   .type memory_unmap, %function
   
-  .global key_read
-  .type key_read, %function
+  .global key
+  .type key, %function
   
   .global triangle
   .type triangle, %function
@@ -132,7 +132,7 @@ memory_unmap:
 @\brief: le o valor dos botoes
 @\param[in]: null
 @\return: a soma do valor dos botoes pressionados
-key_read: 
+key: 
   @salva na pilha
   sub sp, sp, #4 
   str r1, [sp, #0]
