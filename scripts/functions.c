@@ -2,25 +2,40 @@
 
 extern void memory_map();
 extern void memory_unmap();
-extern int key_read();
-extern void hexs(unsigned int digito0,unsigned int digito1,unsigned int digito2,unsigned int digito3,unsigned int digito4,unsigned int digito5);
-extern void triangle(unsigned int cor,unsigned int tamanho,unsigned int posX,unsigned int posY,unsigned int endereco);
-extern void square(unsigned int cor,unsigned int tamanho,unsigned int posX,unsigned int posY,unsigned int endereco);
+extern int key();
+extern void hexs(unsigned int digit0,unsigned int digit1,unsigned int digit2,unsigned int digit3,unsigned int digit4,unsigned int digit5);
+extern void triangle(unsigned int color,unsigned int size,unsigned int x,unsigned int y,unsigned int address);
+extern void square(unsigned int color,unsigned int size,unsigned int x,unsigned int y,unsigned int address);
 extern void background_color(unsigned int red, unsigned int green, unsigned int blue);
 extern void sprite(unsigned int reg, unsigned int activation_bit, unsigned int x, unsigned int y, unsigned int offset);
 extern void background_block(unsigned int address, unsigned int red, unsigned int green, unsigned int blue);
 extern void WSM(unsigned int address, unsigned int red, unsigned int green, unsigned int blue);
 
+// funcao para mapear memoria
+void video_open(){
+    memory_map();
+}
+
+// funcao para desmapear memoria
+void video_close(){
+    memory_unmap();
+}
+
+//funcao para ler as chaves
+void key_read(){
+    key();
+}
+
 // funcao para desenhar um triangulo na tela
-void draw_triangle(unsigned int cor,unsigned int tamanho,unsigned int posX,unsigned int posY,unsigned int endereco){
-  triangle(cor, tamanho, posX, posY, endereco);
+void draw_triangle(unsigned int color,unsigned int size,unsigned int x,unsigned int y,unsigned int address){
+  triangle(color, size, x, y, address);
 }
 
 // funcao para desenhar um quadrado na tela
-void draw_square(unsigned int cor,unsigned int tamanho,unsigned int posX,unsigned int posY,unsigned int endereco){
-  square(cor, tamanho, posX, posY, endereco);
+void draw_square(unsigned int color,unsigned int size,unsigned int x,unsigned int y,unsigned int address){
+  square(color, size, x, y, address);
 }
-// funcao para mudar a cor do background
+// funcao para mudar a color do background
 void set_background_color(unsigned int red, unsigned int green, unsigned int blue){
   background_color(red, green, blue);
 }
@@ -41,7 +56,7 @@ void add_sprite(unsigned int base_address, unsigned int red, unsigned int green,
   }
 }
 void clear_screen() {
-  // Define a cor de fundo para preto
+  // Define a color de fundo para preto
   set_background_color(0, 0, 0);
 
   // Apaga todos os blocos de background
