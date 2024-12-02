@@ -1,3 +1,5 @@
+#include "gpu_lib.h"
+
 extern void memory_map();
 extern void memory_unmap();
 extern int key();
