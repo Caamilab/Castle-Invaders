@@ -30,8 +30,9 @@ typedef struct {
 } Sprite;
 
 void create_invaders(Sprite sprites[], int size);
+void create_protectors(Sprite_Fixed *sprite2, unsigned int x2, unsigned int y2, unsigned int offset2);
 void increase_coordinate(Sprite *sp);
-int collision(Sprite *sp1, Sprite *sp2);
+int collision(Sprite *sp1, Sprite_Fixed *sp2);
 
 
 #endif // GAME_FUNCTIONS_H

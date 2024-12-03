@@ -10,8 +10,8 @@ void create_invaders(Sprite sprites[], int size) {
         sprites[i].coord_x = rand() % 640;
         sprites[i].coord_y = 479;
         sprites[i].direction = invaders_directions[rand () % 3];
-        sprites[i].offset = rand() % 24; //mudar esse valor dps
-        sprites[i].data_register = i + 2;
+        sprites[i].offset = rand() % 4 + 18; //é pra aparecer só os carros
+        sprites[i].data_register = i + 3;//verificar isso
         sprites[i].step_x = 5; //verificar esse valor
         sprites[i].step_y = 5; //verificar esse valor
         sprites[i].ativo = 1;
@@ -20,6 +20,31 @@ void create_invaders(Sprite sprites[], int size) {
 
         set_sprite(sprites[i].data_register, sprites[i].ativo, sprites[i].coord_x, sprites[i].coord_y, sprites[i].offset);
     }
+}
+
+void create_protectors(Sprite_Fixed *sprite2, unsigned int x2, unsigned int y2, unsigned int offset2){
+    sprite2->coord_x = x2;             
+    sprite2->coord_y = y2;               
+    sprite2->offset = offset2;          
+    sprite2->data_register = 2; 
+    sprite2->ativo = 1;               
+
+    set_sprite(sprite2->data_register, sprite2->ativo, sprite2->coord_x, sprite2->coord_y, sprite2->offset);
+    
+    /*int x1, unsigned int y1, unsigned int offset1,
+    Sprite protector1;
+    
+    protector1.ativo = 1;
+    protector1.collision = 0;
+    protector1.coord_x = x1;
+    protector1.coord_y = y1;
+    protector1.data_register = 1;
+    protector1.direction = ;
+    protector1.last_update = clock();
+    protector1.offset = offset1;
+    protector1.step_x = ;
+    protector1.step_y = ;*/
+
 }
 
 void increase_coordinate(Sprite *sp){
@@ -78,7 +103,7 @@ void increase_coordinate(Sprite *sp){
 
 }
 
-int collision(Sprite *sp1, Sprite *sp2){
+int collision(Sprite *sp1, Sprite_Fixed *sp2){//mudei o segundo para ser fixo temorareamnete dps deve voltar a ser sprite
     const int sprite_width = 20;
     const int sprite_height = 20;
 
@@ -93,8 +118,11 @@ int collision(Sprite *sp1, Sprite *sp2){
     int bottom2 = sp2->coord_y + sprite_height;
 
      if (right1 < left2 || left1 > right2 || bottom1 < top2 || top1 > bottom2) {
+         sp1->collision = 0;
         return 0; 
     } else {
+        sp1->collision = 1;
+        //Teria que colocar o do sp2 tbm quando ele voltar a ser movel
         return 1; 
     }
 }
