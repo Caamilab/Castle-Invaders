@@ -4,9 +4,10 @@
 #include <time.h>
 
 int main() {
+    video_open();
     Sprite_Fixed protector2;
-    create_protectors(&protector2,50, 50, 0);
-    srand(time(NULL));//pesquisar
+    create_protectors(&protector2, 50, 50, 0);
+    srand(time(NULL));
     Sprite sprites[29];
     create_invaders(sprites, 29);
      while (1) {
@@ -18,5 +19,6 @@ int main() {
             }
         }
      }
+    video_close(); 
     return 0;
 }
