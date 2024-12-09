@@ -41,8 +41,7 @@ HEX0_BASE: .word 0x60  @ Endereço do display HEX0
   .type sprite, %function   
 
   .global background_color
-  .type background_color
-  , %function 
+  .type background_color, %function 
 
   .global background_block
   .type background_block, %function
