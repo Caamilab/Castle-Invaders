@@ -5,17 +5,20 @@
 #include <stdlib.h>
 #include <time.h>
 #include <fcntl.h>  
+#include <pthread.h>
 
 /* screen limits */
 #define XMIN 10
-#define XMAX 460 
+#define XMAX 620
 #define YMIN 10 
-#define YMAX 620
+#define YMAX 460
+
+pthread_t thread1; 
 
 int main() {
     int fd, bytes,left, middle, right;
     unsigned char data[3];
-    signed char x, y, deltaX, deltaY;
+    int x, y, deltaX, deltaY;
     const char *pDevice = "/dev/input/mice";
 
     deltaX = 320;
@@ -27,29 +30,32 @@ int main() {
         return -1;
     }
     memory_map();
-    set_sprite(2, 1, deltaX, deltaY, 0);
+    set_sprite(3, 1, deltaX, deltaY, 9);
     while(1){
-        bytes = read(fd, data, sizeof(data));
+        bytes = read(fd, data, sizeof(data)); 
         if(bytes > 0){
             left = data[0] & 0x1;
             right = data[0] & 0x2;
             middle = data[0] & 0x4;
 
-            x = data[1];
-            y = data[2];
+            x = (signed char)data[1];
+            y = (signed char)data[2];
+            
             /*  esqueda = -x 
                 direita = +x
                 cima = +y
                 baixo = -y
             */
-            if ((x >= XMIN && x <= XMAX) && (y >= YMIN && y <= YMAX)) {
-                x = deltaX + x; 
-                y = deltaY + y;
-                deltaX = x;
-                deltaY = y; 
-                draw_triangle(0b000000111, 0b0001, deltaY, deltaX, 0b0001);
-                printf("limits\n");
-            }
+            deltaX = deltaX + x;
+            printf("x - %d\n",deltaX);
+            deltaY = deltaY - y; 
+            printf("y - %d\n",deltaY);
+            if (deltaX > XMAX) deltaX = XMAX;
+            if (deltaX < XMIN) deltaX = XMIN;
+            if (deltaY > YMAX) deltaY = YMAX;
+            if (deltaY < YMIN) deltaY = YMIN;
+
+            set_sprite(3, 1, deltaX, deltaY, 9);  
 
             /*if (y >= YMIN && y <= YMAX){
                 x = deltaX; 
