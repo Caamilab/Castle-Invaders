@@ -9,26 +9,32 @@
 /* screen limits */
 #define XMIN 0
 #define XMAX 640
+#define NYMAX 112
 #define YMIN 0 
 #define YMAX 480 
 
+
 int main() {
-    int fd, bytes,left, middle, right;
+    int i, fd, bytes,left, middle, right;
     unsigned char data[3];
     int x, y, deltaX, deltaY;
     const char *pDevice = "/dev/input/mice";
 
-    deltaX = 320;
-    deltaY = 240;
+    deltaX = 320; //320 meio 
+    deltaY = YMIN; //240 meio
+    
+    memory_map(); 
 
     fd = open(pDevice, O_RDWR);
     if (fd == -1){
         printf("ERROR Opening %s\n", pDevice);
         return -1;
     }
-    memory_map(); 
-    set_background_color(000, 125, 000);
-    //set_sprite(3, 1, deltaX, deltaY, 9);
+    clear_screen(); 
+    set_background_color(000, 111, 000);
+    set_sprite(3, 1, deltaX, deltaY, 7); 
+    set_background_block(112, 0, 000, 000, 000);
+
     while(1){
         bytes = read(fd, data, sizeof(data)); 
         if(bytes > 0){
@@ -48,12 +54,13 @@ int main() {
             printf("x - %d\n",deltaX);
             deltaY = deltaY - y; 
             printf("y - %d\n",deltaY);
+            printf("left - %d\n",left);
             if (deltaX > XMAX) deltaX = XMAX;
             if (deltaX < XMIN) deltaX = XMIN;
-            if (deltaY > YMAX) deltaY = YMAX;
+            if (deltaY > NYMAX) deltaY = NYMAX;
             if (deltaY < YMIN) deltaY = YMIN;
 
-            //set_sprite(3, 1, deltaX, deltaY, 9);  
+            set_sprite(3, 1, deltaX, deltaY, 7);  
 
             /*if (y >= YMIN && y <= YMAX){
                 x = deltaX; 
