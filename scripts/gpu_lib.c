@@ -74,6 +74,6 @@ void clear_screen() {
   // Desabilita todos os poligonos
   for (int i = 0; i< 16; i++){
     draw_triangle(0, 0 , 0, 0, i);
-    draw_triangle(0, 0, 0, 0, i);
+    draw_square(0, 0, 0, 0, i);
   }
 }
