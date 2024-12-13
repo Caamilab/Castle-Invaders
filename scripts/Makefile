@@ -5,7 +5,7 @@ TARGET = game
 CC = gcc
 
 # Flags de compilação
-CFLAGS = -Wall -Wextra -std=c99 -g -pthread
+CFLAGS = -Wall -Wextra -std=c99 -g 
 
 # Arquivos fonte e headers
 SRCS = gpu_lib.s gpu_lib.c game_functions.c game.c

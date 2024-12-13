@@ -5,15 +5,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include <fcntl.h>  
-#include <pthread.h>
 
 /* screen limits */
-#define XMIN 10
-#define XMAX 620
-#define YMIN 10 
-#define YMAX 460
-
-pthread_t thread1; 
+#define XMIN 0
+#define XMAX 640
+#define YMIN 0 
+#define YMAX 480 
 
 int main() {
     int fd, bytes,left, middle, right;
@@ -29,8 +26,9 @@ int main() {
         printf("ERROR Opening %s\n", pDevice);
         return -1;
     }
-    memory_map();
-    set_sprite(3, 1, deltaX, deltaY, 9);
+    memory_map(); 
+    set_background_color(000, 125, 000);
+    //set_sprite(3, 1, deltaX, deltaY, 9);
     while(1){
         bytes = read(fd, data, sizeof(data)); 
         if(bytes > 0){
@@ -55,7 +53,7 @@ int main() {
             if (deltaY > YMAX) deltaY = YMAX;
             if (deltaY < YMIN) deltaY = YMIN;
 
-            set_sprite(3, 1, deltaX, deltaY, 9);  
+            //set_sprite(3, 1, deltaX, deltaY, 9);  
 
             /*if (y >= YMIN && y <= YMAX){
                 x = deltaX; 
