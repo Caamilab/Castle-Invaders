@@ -33,7 +33,7 @@ int main() {
     clear_screen(); 
     set_background_color(000, 111, 000);
     set_sprite(3, 1, deltaX, deltaY, 7); 
-    set_background_block(112, 0, 000, 000, 000);
+    set_background_block(14, 0, 000, 000, 000); //linha, coluna, r, g, b
 
     while(1){
         bytes = read(fd, data, sizeof(data)); 
