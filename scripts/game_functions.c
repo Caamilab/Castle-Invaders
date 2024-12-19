@@ -9,10 +9,10 @@ void create_invaders(Sprite sprites[], int size) {
         sprites[i].coord_x = rand() % (GAME_AREA_X_MAX - GAME_AREA_X_MIN) + GAME_AREA_X_MIN;
         sprites[i].coord_y = GAME_AREA_Y_MAX - 1;
         sprites[i].direction = invaders_directions[rand () % 3];
-        sprites[i].offset = rand() % 4 + 17; 
+        sprites[i].offset = rand() % 2 + 21; //verificar 
         sprites[i].data_register = i + 6;
-        sprites[i].step_x = i + 1; 
-        sprites[i].step_y = i + 1; 
+        sprites[i].step_x = rand() % 3 + 1; //mudei 
+        sprites[i].step_y = rand() % 3 + 1; 
         sprites[i].ativo = 1;
         sprites[i].collision = 0;
         sprites[i].last_update = clock();

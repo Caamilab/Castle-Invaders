@@ -1,4 +1,4 @@
-#include "gpu_lib.h"
+ #include "gpu_lib.h"
 
 extern void memory_map();
 extern void memory_unmap();
@@ -22,8 +22,8 @@ void video_close(){
 }
 
 //funcao para ler as chaves
-void key_read(){
-    key();
+int key_read(){
+    return key();
 }
 
 // funcao para desenhar um triangulo na tela
@@ -44,9 +44,9 @@ void set_sprite(unsigned int reg, unsigned int activation_bit, unsigned int x, u
   sprite(reg, activation_bit, x, y, offset);
 }
 // funcao para mostrar bloco 8x8
-void set_background_block(unsigned int x, unsigned int y, unsigned int red, unsigned int green, unsigned int blue){
-  unsigned int address = (x * 80) + y;
-  background_block(address, red, green, blue);
+void set_background_block(unsigned int lin, unsigned int col, unsigned int red, unsigned int green, unsigned int blue){
+  unsigned int address = (lin * 80) + col;
+  background_block(address, red, green, blue); //pensar no x e no y qual deve ser qual 
 }
 // funcao para adicionar sprite
 void add_sprite(unsigned int base_address, unsigned int red, unsigned int green, unsigned int blue){
@@ -62,7 +62,7 @@ void clear_screen() {
   // Apaga todos os blocos de background
   for (int col = 0; col < 80; col++) {
     for (int lin = 0; lin < 60; lin++) { 
-      set_background_block(col, lin, 110, 111, 111);  
+      set_background_block(lin, col, 110, 111, 111);  
     }
   }
 
@@ -74,6 +74,6 @@ void clear_screen() {
   // Desabilita todos os poligonos
   for (int i = 0; i< 16; i++){
     draw_triangle(0, 0 , 0, 0, i);
-    draw_square(0, 0, 0, 0, i);
+    draw_square(0, 0, 0, 0, i); 
   }
-}
+}//testar sem mudar e dps mudar para 15 e ver se resolve o problema 

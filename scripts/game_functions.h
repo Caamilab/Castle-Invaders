@@ -5,10 +5,11 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define GAME_AREA_X_MIN 10
+#define GAME_AREA_X_MIN 0
 #define GAME_AREA_X_MAX 620
-#define GAME_AREA_Y_MIN 10
-#define GAME_AREA_Y_MAX 460
+#define GAME_AREA_Y_MIN 100
+#define GAME_AREA_Y_MAX 480
+
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 
@@ -38,7 +39,7 @@ typedef struct {
 void create_invaders(Sprite sprites[], int size);
 void create_protectors(Sprite *sprite1, unsigned int x1, unsigned int y1, unsigned int offset1, Sprite_Fixed *sprite2, unsigned int x2, unsigned int y2, unsigned int offset2);
 void increase_coordinate(Sprite *sp);
-int collision(Sprite *sp1, Sprite_Fixed *sp2);
+int collision(Sprite *sp1, Sprite *sp2);
 
 
 #endif // GAME_FUNCTIONS_H

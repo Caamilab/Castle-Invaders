@@ -4,132 +4,125 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include <unistd.h> // Include for usleep
 
 pthread_mutex_t accelMutex;
-//Deixar so o prototipo aqui 
-void* monitor_accel(void* arg){
+
+// Function prototype for monitor_accel
+//void* monitor_accel(void* arg);
+
+void* monitor_accel(void* arg) {
     int16_t XYZ[3];
     int16_t direction;
     uint8_t idAccel = ADXL345_ConfigureToGame();
 
-    if (idAccel == 0xE5){ // correct address of adxl345
+    if (idAccel == 0xE5) { // correct address of adxl345
         ADXL345_Init();
-        while (1)
-        {
+        Sprite* protector1 = (Sprite*)arg;
+
+        // Variáveis para armazenar a velocidade atual
+        float current_step_x = 0.0;
+
+        while (1) {
             pthread_mutex_lock(&accelMutex);
 
-            if (ADXL345_WasActivityUpdated()){
+            if (ADXL345_WasActivityUpdated()) {
+                // Atualiza os valores de aceleração
                 ADXL345_XYZ_Read(XYZ);
-                direction = movement((XYZ[0]*4)); //4 because of the mg_per_lsb
-                Sprite* protector1 = (Sprite*)arg; 
-                
-                switch (direction) { 
-                    case 1: 
-                        protector1->direction = RIGHT;
+                direction = movement((XYZ[0] * 4)); // 4 porque é o mg_per_lsb
+
+                // Atualiza a direção e velocidade com base na aceleração detectada
+                switch (direction) {
+                    case 0: //centro
+                        current_step_x = 0;
                         break;
-                    case 2: 
+                    case 1: // Direita
+                        protector1->direction = RIGHT;
+                        current_step_x = (XYZ[0] * 4) * 0.04; // Ajuste da velocidade
+                        break;
+                    case 2: // Esquerda
                         protector1->direction = LEFT;
+                        current_step_x = - (XYZ[0] * 4) * 0.04; // Ajuste da velocidade
+                        break;
+                    default:
+                        // Caso nenhuma direção seja detectada, mantém a velocidade atual
                         break;
                 }
-                
-                protector1->step_x = (XYZ[0]*4) * 0.01;
-                increase_coordinate(&protector1);
-            }  
+
+                // Atualiza o valor de step_x do sprite
+                protector1->step_x = current_step_x;
+            }
+
             pthread_mutex_unlock(&accelMutex);
-            usleep(10000);      
-        }                   
+
+            // Atualiza a posição do sprite continuamente com base na velocidade atual
+            if (current_step_x != 0.0) {
+                increase_coordinate(protector1);
+            }
+
+            usleep(10000); // Pequeno delay para evitar sobrecarga no processamento
+        }
     }
-    return NULL; 
+    return NULL;
+}
+
+void create_wall(){
+     
+    unsigned int red = 128, green = 128, blue = 128;
+
+    
+    unsigned int y_top = 5; 
+
+    
+    unsigned int block_col_start = 0;   
+    unsigned int block_col_end = 80;    
+
+  
+    for (unsigned int col = block_col_start; col <= block_col_end; col += 2) {
+        set_background_block(y_top, col, red, green, blue);
+    }
+
+    for (unsigned int lin = y_top + 1; lin <= 15; lin++) { 
+        for (unsigned int col = block_col_start; col <= block_col_end; col++) {
+            set_background_block(lin, col, red, green, blue);
+        }
+    }
 }
 
 int main() {
     video_open();
-    
-    set_background_color(255, 255, 255);
+    clear_screen();
+    set_background_color(000, 100, 000);
 
     Sprite protector1;
+
     Sprite_Fixed protector2;
-    create_protectors(&protector1, 220, 120, 0, &protector2, 220, 0, 1);
+    create_protectors(&protector1, 310, 150, 0, &protector2, 310, 15, 1);
     
-    srand(time(NULL));
-    Sprite sprites[26];
-
-
     pthread_t accelThread; 
     pthread_mutex_init(&accelMutex, NULL);
 
-    // create the button thread 
+    // Create  thread 
     if (pthread_create(&accelThread, NULL, monitor_accel, (void*)&protector1) != 0) {
         perror("ERROR: could not create the button thread...");
         return 1;
     }
 
-    create_invaders(sprites, 26);//mudar para que caiba o sprite do mouse
-     while (1) { 
+    srand(time(NULL));
+    Sprite sprites[26];
+
+
+    create_invaders(sprites, 26); // verificar quantos colocar na tela
+    while (1) { 
         for (int i = 0; i < 26; i++) {
             increase_coordinate(&sprites[i]);
-            if (collision(&sprites[i],&protector1)){
+            if (collision(&sprites[i], &protector1)) {
                 sprites[i].ativo = 0;
                 set_sprite(sprites[i].data_register, 0, 0, 0, 0);
             }
         }
-     }
+    }
+    
     video_close(); 
     return 0;
 }
-//Consertar o clear_screen
-// Codigo castelos 
-/*#include <stdio.h>
-
-// Suponha que esta função está definida em outro lugar
-void set_background_block(unsigned int x, unsigned int y, unsigned int red, unsigned int green, unsigned int blue);
-
-int main() {
-    // Definindo a cor cinza para as torres
-    unsigned int red = 128, green = 128, blue = 128;
-
-    // Altura do topo das torres
-    unsigned int y_top = 30;
-
-    // Coordenadas e larguras das torres
-    unsigned int tower1_x_start = 30;
-    unsigned int tower1_x_end = 180;
-
-    unsigned int tower2_x_start = 200;
-    unsigned int tower2_x_end = 350;
-
-    unsigned int tower3_x_start = 370;
-    unsigned int tower3_x_end = 520;
-
-    // Desenhar blocos alternados no topo da primeira torre
-    for (unsigned int x = tower1_x_start; x <= tower1_x_end; x += 2) {
-        set_background_block(x, y_top, red, green, blue);
-    }
-
-    // Desenhar blocos alternados no topo da segunda torre
-    for (unsigned int x = tower2_x_start; x <= tower2_x_end; x += 2) {
-        set_background_block(x, y_top, red, green, blue);
-    }
-
-    // Desenhar blocos alternados no topo da terceira torre
-    for (unsigned int x = tower3_x_start; x <= tower3_x_end; x += 2) {
-        set_background_block(x, y_top, red, green, blue);
-    }
-
-    // Desenhar o corpo das torres
-    for (unsigned int y = y_top + 1; y <= 80; y++) {
-        for (unsigned int x = tower1_x_start; x <= tower1_x_end; x++) {
-            set_background_block(x, y, red, green, blue);
-        }
-        for (unsigned int x = tower2_x_start; x <= tower2_x_end; x++) {
-            set_background_block(x, y, red, green, blue);
-        }
-        for (unsigned int x = tower3_x_start; x <= tower3_x_end; x++) {
-            set_background_block(x, y, red, green, blue);
-        }
-    }
-
-    return 0;
-}
-*/

@@ -6,7 +6,7 @@ void video_open();
 void video_close();
 
 // Função para ler as chaves
-void key_read();
+int key_read();
 
 // Funções para desenhar formas na tela
 void draw_triangle(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
@@ -14,7 +14,7 @@ void draw_square(unsigned int, unsigned int, unsigned int, unsigned int, unsigne
 
 // Funções para manipulação do background
 void set_background_color(unsigned int, unsigned int, unsigned int);
-void set_background_block(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
+void set_background_block(unsigned lin, unsigned col, unsigned int, unsigned int, unsigned int);
 
 // Funções para manipulação de sprites
 void set_sprite(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
