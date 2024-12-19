@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <fcntl.h>  
+#include <unistd.h>
+#include <pthread.h>
 
 /* screen limits */
 #define XMIN 0
@@ -13,12 +15,31 @@
 #define YMIN 0 
 #define YMAX 480 
 
+int x, y, deltaX, deltaY;
+int a, i, fd, bytes,left, middle, right;
+unsigned char data[3];
+const char *pDevice = "/dev/input/mice";
+
+void * shot(void* arg){
+    int a, deltaXAux, deltaYAux;
+    while(1){
+        if (left == 1){
+            deltaXAux = deltaX; 
+            deltaYAux = deltaY+20;
+            printf("Delta x - %d\n",deltaX);
+            printf("AuxDelta x - %d\n",deltaX);
+            for (a = deltaYAux; a <= YMAX; a++ ){
+                set_sprite(6, 1, deltaXAux, a, 11);
+                usleep(5000);
+            } 
+        } 
+    }
+    return NULL; 
+    
+}
 
 int main() {
-    int i, fd, bytes,left, middle, right;
-    unsigned char data[3];
-    int x, y, deltaX, deltaY;
-    const char *pDevice = "/dev/input/mice";
+    pthread_t threadShot; 
 
     deltaX = 320; //320 meio 
     deltaY = YMIN; //240 meio
@@ -30,12 +51,20 @@ int main() {
         printf("ERROR Opening %s\n", pDevice);
         return -1;
     }
-    clear_screen(); 
-    set_background_color(000, 111, 000);
-    set_sprite(3, 1, deltaX, deltaY, 7); 
+
+    clear_screen();
+    if(pthread_create(&threadShot, NULL, shot, NULL) != 0){
+        perror("Erro ao criar a thread do tiro");
+        exit(EXIT_FAILURE);
+    } 
+    set_background_color(000, 100, 000);
+    //set_sprite(3, 1, deltaX, deltaY, 7); 
+    //set_sprite(3, 1, deltaX, deltaY+20, 1); 
+    //set_sprite(6, 1, deltaX+10, deltaY+20, 11);
     set_background_block(14, 0, 000, 000, 000); //linha, coluna, r, g, b
 
     while(1){
+        set_sprite(7, 1, deltaX, deltaY, 1);
         bytes = read(fd, data, sizeof(data)); 
         if(bytes > 0){
             left = data[0] & 0x1;
@@ -51,16 +80,14 @@ int main() {
                 baixo = -y
             */
             deltaX = deltaX + x;
-            printf("x - %d\n",deltaX);
+            //printf("x - %d\n",deltaX);
             deltaY = deltaY - y; 
-            printf("y - %d\n",deltaY);
-            printf("left - %d\n",left);
+            //printf("y - %d\n",deltaY);
+            //printf("left - %d\n",left);
             if (deltaX > XMAX) deltaX = XMAX;
             if (deltaX < XMIN) deltaX = XMIN;
             if (deltaY > NYMAX) deltaY = NYMAX;
-            if (deltaY < YMIN) deltaY = YMIN;
-
-            set_sprite(3, 1, deltaX, deltaY, 7);  
+            if (deltaY < YMIN) deltaY = YMIN; 
 
             /*if (y >= YMIN && y <= YMAX){
                 x = deltaX; 
