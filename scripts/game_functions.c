@@ -50,7 +50,7 @@ void increase_coordinate(Sprite *sp){
     clock_t current_time = clock();
     double time_elapsed = ((double)(current_time - sp->last_update)) / CLOCKS_PER_SEC;
 
-    if (time_elapsed >= 0.5) {
+    if (time_elapsed >= 0.1) {
         switch (sp->direction) {
            case UP:
                 sp->coord_y -= sp->step_y;
@@ -97,7 +97,6 @@ void increase_coordinate(Sprite *sp){
         }
 
         sp->last_update = current_time;
-        set_sprite(sp->data_register, sp->ativo, sp->coord_x, sp->coord_y, sp->offset);
     }
 
 }
@@ -124,5 +123,28 @@ int collision(Sprite *sp1, Sprite *sp2){
         sp1->collision = 1;
         sp1->collision = 1;
         return 1; 
+    }
+}
+
+void create_wall(){
+     
+    unsigned int red = 128, green = 128, blue = 128;
+
+    
+    unsigned int y_top = 5; 
+
+    
+    unsigned int block_col_start = 0;   
+    unsigned int block_col_end = 80;    
+
+  
+    for (unsigned int col = block_col_start; col <= block_col_end; col += 2) {
+        set_background_block(y_top, col, red, green, blue);
+    }
+
+    for (unsigned int lin = y_top + 1; lin <= 15; lin++) { // Corpo do bloco vai até a linha 15
+        for (unsigned int col = block_col_start; col <= block_col_end; col++) {
+            set_background_block(lin, col, red, green, blue);
+        }
     }
 }
