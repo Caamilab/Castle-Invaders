@@ -22,7 +22,7 @@ void create_invaders(Sprite sprites[], int size) {
     }
 }
 
-void create_protectors(Sprite_Fixed *sprite2, unsigned int x2, unsigned int y2, unsigned int offset2){
+void create_protectors(Sprite *sprite1, unsigned int x1, unsigned int y1, unsigned int offset1, Sprite_Fixed *sprite2, unsigned int x2, unsigned int y2, unsigned int offset2){
     sprite2->coord_x = x2;             
     sprite2->coord_y = y2;               
     sprite2->offset = offset2;          
@@ -31,21 +31,21 @@ void create_protectors(Sprite_Fixed *sprite2, unsigned int x2, unsigned int y2, 
 
     set_sprite(sprite2->data_register, sprite2->ativo, sprite2->coord_x, sprite2->coord_y, sprite2->offset);
     
-    /*int x1, unsigned int y1, unsigned int offset1,
-    Sprite protector1;
-    
-    protector1.ativo = 1;
-    protector1.collision = 0;
-    protector1.coord_x = x1;
-    protector1.coord_y = y1;
-    protector1.data_register = 1;
-    protector1.direction = ;
-    protector1.last_update = clock();
-    protector1.offset = offset1;
-    protector1.step_x = ;
-    protector1.step_y = ;*/
+    sprite1->ativo = 1;
+    sprite1->collision = 0;
+    sprite1->coord_x = x1;
+    sprite1->coord_y = y1;
+    sprite1->data_register = 1;
+    //protector1.direction = ;
+    sprite1->last_update = clock();
+    sprite1->offset = offset1;
+   // protector1.step_x = ;
+    //protector1.step_y = ;
 
+    set_sprite(sprite1->data_register, sprite1->ativo, sprite1->coord_x, sprite1->coord_y, sprite1->offset);
+    
 }
+
 
 void increase_coordinate(Sprite *sp){
     if (!sp->ativo) return;
