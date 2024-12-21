@@ -9,9 +9,9 @@ void create_invaders(Sprite sprites[], int size) {
         sprites[i].coord_x = rand() % (GAME_AREA_X_MAX - GAME_AREA_X_MIN) + GAME_AREA_X_MIN;
         sprites[i].coord_y = GAME_AREA_Y_MAX - 1;
         sprites[i].direction = invaders_directions[rand () % 3];
-        sprites[i].offset = rand() % 2 + 21; //verificar 
+        sprites[i].offset = rand() % 2 + 21; 
         sprites[i].data_register = i + 6;
-        sprites[i].step_x = rand() % 3 + 1; //mudei 
+        sprites[i].step_x = rand() % 3 + 1; 
         sprites[i].step_y = rand() % 3 + 1; 
         sprites[i].ativo = 1;
         sprites[i].collision = 0;
@@ -35,11 +35,8 @@ void create_protectors(Sprite *sprite1, unsigned int x1, unsigned int y1, unsign
     sprite1->coord_x = x1;
     sprite1->coord_y = y1;
     sprite1->data_register = 1;
-    //protector1.direction = ;
     sprite1->last_update = clock();
     sprite1->offset = offset1;
-   // protector1.step_x = ;
-    //protector1.step_y = ;
 
     set_sprite(sprite1->data_register, sprite1->ativo, sprite1->coord_x, sprite1->coord_y, sprite1->offset);
     
