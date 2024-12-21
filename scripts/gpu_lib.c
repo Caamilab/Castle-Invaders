@@ -77,4 +77,4 @@ void clear_screen() {
     draw_triangle(0, 0 , 0, 0, i);
     draw_square(0, 0, 0, 0, i); 
   }
-}//testar sem mudar e dps mudar para 15 e ver se resolve o problema 
+}
