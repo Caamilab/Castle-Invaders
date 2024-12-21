@@ -42,3 +42,28 @@ Não é permitido mais de um tiro por vez.
 <p align="center">
 <img src="media/redsprit.png" alt="Redsprite" width="300"/> 
 </p>
+
+### INVADERS
+
+Nenhum jogador pode ser invasor. \
+Tem como objetivo atacar o castelo. \
+Os jogadores precisam destruí-los.  
+<p align="center">  
+<img src="media/invaders.png" alt="Invaders" width="300"/> 
+</p>
+
+
+### INÍCIO, PAUSA E FIM
+
+Para iniciar, pausar, retomar e encerrar o jogo, é necessário usar os botões dispostos na placa. \
+Cada botão tem uma funcionalidade diferente.
+<p align="center">  
+<img src="media/buttons.png" alt="Buttons" width="300"/> 
+</p>
+
+| Botão  |   Ação            |                           Descrição                                    |
+| -----  | --------          |--------------------------------------------------------------------  |
+| B0     | Iniciar           | Inicia o jogo. É obrigatório o uso deste botão para iniciar o jogo.    |
+| B1     | Pausar/Retomar| Pausa o jogo em determinado ponto e, se clicado novamente, retoma.     |
+| B2     | Reiniciar| Reinicia o jogo do independente do momento que for acionado.           |
+| B3     | Encerrar| Mata o processo e fecha o jogo.                                        |
