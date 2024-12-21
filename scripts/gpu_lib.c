@@ -55,6 +55,7 @@ void add_sprite(unsigned int base_address, unsigned int red, unsigned int green,
     WSM(address, red, green, blue);           
   }
 }
+
 void clear_screen() {
   // Define a color de fundo para preto
   set_background_color(0, 0, 0);
