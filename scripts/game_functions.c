@@ -21,7 +21,7 @@ void create_invaders(Sprite sprites[], int size) {
     }
 }
 
-void create_protectors(Sprite *sprite1, unsigned int x1, unsigned int y1, unsigned int offset1, Sprite_Fixed *sprite2, unsigned int x2, unsigned int y2, unsigned int offset2){
+void create_protectors(Sprite *sprite1, unsigned int x1, unsigned int y1, unsigned int offset1, Sprite *sprite2, unsigned int x2, unsigned int y2, unsigned int offset2){
     sprite2->coord_x = x2;             
     sprite2->coord_y = y2;               
     sprite2->offset = offset2;          
