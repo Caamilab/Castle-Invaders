@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <unistd.h>
 #include "game_functions.h"
 #include "gpu_lib.h"
 #include "adxl345.h"
