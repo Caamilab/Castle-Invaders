@@ -1,4 +1,4 @@
-# CASTLE INVADERS
+# :space_invader: :european_castle: :video_game: CASTLE INVADERS :video_game: :european_castle: :space_invader:
 
 ## Equipe:
 - [Camila de Araújo Bastos](https://github.com/Caamilab)
