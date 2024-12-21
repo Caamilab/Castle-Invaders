@@ -63,7 +63,7 @@ Cada botão tem uma funcionalidade diferente.
 
 | Botão  |   Ação            |                           Descrição                                    |
 | -----  | --------          |--------------------------------------------------------------------  |
-| B0     | Iniciar           | Inicia o jogo. É obrigatório o uso deste botão para iniciar o jogo.    |
-| B1     | Pausar/Retomar| Pausa o jogo em determinado ponto e, se clicado novamente, retoma.     |
+| B0     | Iniciar/Retomar           | É obrigatório o uso deste botão para iniciar o jogo. Caso esteja pausado, ele retoma.    |
+| B1     | Pausar | Pausa o jogo em determinado ponto.     |
 | B2     | Reiniciar| Reinicia o jogo do independente do momento que for acionado.           |
 | B3     | Encerrar| Mata o processo e fecha o jogo.                                        |
