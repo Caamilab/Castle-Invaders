@@ -1,6 +1,6 @@
 # :space_invader: :european_castle: :video_game: CASTLE INVADERS :video_game: :european_castle: :space_invader:
 
-Jogo desenvolvido em linguagem C para atender aos requisitos do terceiro problema da disciplina TEC499 - Sistemas Digitais, do curso de Engenharia de Computação da Universidade Estadual de Feira de Santana (UEFS). O projeto utilizou funções da biblioteca criada pela equipe no [segundo problema da disciplina](https://github.com/GabrielSantosCruz/gpu-lib) com a GPU desenvolvida no seguinte trabalho de conclusão de curso: [TCC - Gabriel Sá](https://drive.google.com/file/d/1MlIlpB9TSnoPGEMkocr36EH9-CFz8psO/view).
+Jogo desenvolvido em linguagem C para atender aos requisitos do terceiro problema da disciplina TEC499 - Sistemas Digitais, do curso de Engenharia de Computação da Universidade Estadual de Feira de Santana (UEFS). O projeto utilizou funções em assembly da biblioteca criada pela equipe no [segundo problema da disciplina](https://github.com/GabrielSantosCruz/gpu-lib) com a GPU desenvolvida no seguinte trabalho de conclusão de curso: [TCC - Gabriel Sá](https://drive.google.com/file/d/1MlIlpB9TSnoPGEMkocr36EH9-CFz8psO/view). Para codificação do projeto, foi utilizado o Software Visual Studio Code e sistema operacional Linux. 
 
 ## Equipe
 - [Camila de Araújo Bastos](https://github.com/Caamilab)
@@ -81,3 +81,22 @@ Neste momento o jogo já iniciou. Os invasores estão subindo e os jogadores dev
 <p align="center">  
 <img src="media/gamewithinvaders.png" alt="GameWithInvaders" width="300"/> 
 </p>
+
+### Testes
+
+
+| Ação | Resultado |  
+| ---- | --------- |           
+| Botão B0 | Inicia o jogo | 
+| Botão B1 | Pausa o jogo |
+| Botão B2 | Reinicia o jogo |
+| Botão B3 | Encerra o jogo |
+| Colissão BLUESPRITE - INVASOR | Invasor some da tela e morre | 
+| Colissão com tiro | Invasor some da tela e morre |
+| Movimentação dos jogadores | Mover para direita e esquerda corretamente |
+| Velocidade | Os jogadores aumentam ou diminuem a velocidade de acordo com a intensidade do movimento no mouse/acelerômetro |
+| Limite dos invasores | Os invasores param quando chegam ao castelo |
+
+## Conclusão 
+
+O jogo possui uma boa jogabilidade e a maioria dos requisitos do problema foram atendidos. Houve algumas limitações de hardware, como por exemplo o número máximo de sprites a serem exibidos de uma vez na tela e alguns problemas de concorrência com threads. Porém, a construção e execução do projeto se deu de forma satisfatória. 
